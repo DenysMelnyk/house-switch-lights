@@ -1,13 +1,73 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.HouseWrapper {
+    padding: 200px 0;
+}
+.House {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+    border: 1px solid #000000;
+}
+.House::before {
+    position: absolute;
+    content: '';
+    top: -150px;
+    left: -2px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 252px 150px 252px;
+    border-color: transparent transparent #000000 transparent;
+}
+.Room {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    border: 1px solid #000000;
+}
+.Room.RoomLightOn {
+    background-color: #daa520;
+    color: #000000;
+}
+.Room.RoomLightOff {
+    background-color: #000000;
+    color: #daa520;
+    border: 1px solid #ffffff;
+}
+.RoomTitle,
+.RoomLightStatus {
+    margin-top: 0;
+}
+.RoomLightSwitcher {
+    box-sizing: border-box;
+    border-radius: 3px;
+    outline: none;
+    padding: 5px;
+    font-weight: bold;
+    border: 1px solid transparent;
+}
+.Room.RoomLightOn .RoomLightSwitcher {
+    background-color: #000000;
+    color: #daa520;
+}
+.Room.RoomLightOff .RoomLightSwitcher {
+    background-color: #daa520;
+    color: #000000;
 }
