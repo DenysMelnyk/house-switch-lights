@@ -17,21 +17,22 @@ code {
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    width: 500px;
-    height: 500px;
+    width: 225px;
+    height: 225px;
     margin: 0 auto;
     border: 1px solid #000000;
+    box-sizing: border-box;
 }
 .House::before {
     position: absolute;
     content: '';
-    top: -150px;
-    left: -2px;
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 0 252px 150px 252px;
     border-color: transparent transparent #000000 transparent;
+    top: -100px;
+    left: -20px;
+    border-width: 0 130px 100px 130px;
 }
 .Room {
     box-sizing: border-box;
@@ -51,15 +52,20 @@ code {
     color: #daa520;
     border: 1px solid #daa520;
 }
-.RoomTitle,
+.RoomTitle{
+    margin: 0 0 5px 0;
+    font-size: 16px;
+}
 .RoomLightStatus {
-    margin-top: 0;
+    margin: 0 0 8px 0;
+    font-size: 12px;
 }
 .RoomLightSwitcher {
     box-sizing: border-box;
     border-radius: 3px;
+    font-size: 10px;
     outline: none;
-    padding: 5px;
+    padding: 2px;
     font-weight: bold;
     border: 1px solid transparent;
 }
@@ -73,4 +79,36 @@ code {
 .Room.RoomLightOff .RoomLightSwitcher {
     background-color: #daa520;
     color: #000000;
+}
+.ButtonDesktopVisiblePart {
+    display: none;
+    visibility: hidden;
+}
+
+@media (min-width: 540px) {
+    .House {
+        width: 400px;
+        height: 400px;
+    }
+    .House::before {
+        top: -150px;
+        left: -50px;
+        border-width: 0 252px 150px 252px;
+    }
+    .RoomTitle{
+        margin: 0;
+        font-size: 24px;
+    }
+    .RoomLightStatus {
+        margin: 0 0 14px 0;
+        font-size: 16px;
+    }
+    .RoomLightSwitcher {
+        font-size: 13px;
+        padding: 5px;
+    }
+    .ButtonDesktopVisiblePart {
+        display: inline;
+        visibility: initial;
+    }
 }
