@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import Container from './UI/Container/Container';
 import './index.css';
@@ -17,63 +17,64 @@ const Room = ({lightSwitchAction, roomName, roomLightStatus}) => {
     )
 }
 
-class House extends React.Component {
-    state = {
+const House = () =>  {
+
+    const [state, setState] = useState({
         rooms: {
             kitchen: true,
             bathroom: false,
             livingRoom: true,
             bedroom: false
         }
-    }
-    roomsStateChangeAction = roomName => {
-        this.setState(prevState => {
+    });
+
+    const roomsStateChangeAction = roomName => {
+        setState(prevState => {
             const updatedState = {...prevState};
             updatedState.rooms[roomName] = !prevState.rooms[roomName];
             return updatedState;
         })
     }
-    lightSwitchHandler = room => {
+    const lightSwitchHandler = room => {
         switch (room) {
             case 'kitchen':
-                return this.roomsStateChangeAction('kitchen');
+                return roomsStateChangeAction('kitchen');
             case 'bathroom':
-                return this.roomsStateChangeAction('bathroom');
+                return roomsStateChangeAction('bathroom');
             case 'livingRoom':
-                return this.roomsStateChangeAction('livingRoom');
+                return roomsStateChangeAction('livingRoom');
             case 'bedroom':
-                return this.roomsStateChangeAction('bedroom');
+                return roomsStateChangeAction('bedroom');
             default:
                 return this.state;
         }
     }
-    render() {
+
         return (
                 <div className='House'>
                     <Room
                         roomName='Kitchen'
-                        lightSwitchAction={() => this.lightSwitchHandler('kitchen')}
-                        roomLightStatus={this.state.rooms.kitchen}
+                        lightSwitchAction={() => lightSwitchHandler('kitchen')}
+                        roomLightStatus={state.rooms.kitchen}
                     />
                     <Room
                         roomName='Bathroom'
-                        lightSwitchAction={() => this.lightSwitchHandler('bathroom')}
-                        roomLightStatus={this.state.rooms.bathroom}
+                        lightSwitchAction={() => lightSwitchHandler('bathroom')}
+                        roomLightStatus={state.rooms.bathroom}
                     />
                     <Room
                         roomName='Living Room'
-                        lightSwitchAction={() => this.lightSwitchHandler('livingRoom')}
-                        roomLightStatus={this.state.rooms.livingRoom}
+                        lightSwitchAction={() => lightSwitchHandler('livingRoom')}
+                        roomLightStatus={state.rooms.livingRoom}
                     />
                     <Room
                         roomName='Bedroom'
-                        lightSwitchAction={() => this.lightSwitchHandler('bedroom')}
-                        roomLightStatus={this.state.rooms.bedroom}
+                        lightSwitchAction={() => lightSwitchHandler('bedroom')}
+                        roomLightStatus={state.rooms.bedroom}
                     />
                 </div>
-
         )
-    }
+
 }
 
 const HouseWrapper = () => (
