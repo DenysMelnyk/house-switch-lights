@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import Container from './UI/Container/Container';
 import './index.css';
+import store from "./store/store";
+import {observer} from "mobx-react";
 
 const Room = ({lightSwitchAction, roomName, roomLightStatus}) => {
     const lightStatus = roomLightStatus ? 'On' : 'Off';
@@ -17,70 +19,37 @@ const Room = ({lightSwitchAction, roomName, roomLightStatus}) => {
     )
 }
 
-const House = () =>  {
+const House = observer(({state}) =>
+    (
+        <div className='House'>
+            <Room
+                roomName='Kitchen'
+                lightSwitchAction={() => state.roomsStateChangeAction('kitchen')}
+                roomLightStatus={state.rooms.kitchen}
+            />
+            <Room
+                roomName='Bathroom'
+                lightSwitchAction={() => state.roomsStateChangeAction('bathroom')}
+                roomLightStatus={state.rooms.bathroom}
+            />
+            <Room
+                roomName='Living Room'
+                lightSwitchAction={() => state.roomsStateChangeAction('livingRoom')}
+                roomLightStatus={state.rooms.livingRoom}
+            />
+            <Room
+                roomName='Bedroom'
+                lightSwitchAction={() => state.roomsStateChangeAction('bedroom')}
+                roomLightStatus={state.rooms.bedroom}
+            />
+        </div>
+    ))
 
-    const [state, setState] = useState({
-        rooms: {
-            kitchen: true,
-            bathroom: false,
-            livingRoom: true,
-            bedroom: false
-        }
-    });
-
-    const roomsStateChangeAction = roomName => {
-        setState(prevState => {
-            const updatedState = {...prevState};
-            updatedState.rooms[roomName] = !prevState.rooms[roomName];
-            return updatedState;
-        })
-    }
-    const lightSwitchHandler = room => {
-        switch (room) {
-            case 'kitchen':
-                return roomsStateChangeAction('kitchen');
-            case 'bathroom':
-                return roomsStateChangeAction('bathroom');
-            case 'livingRoom':
-                return roomsStateChangeAction('livingRoom');
-            case 'bedroom':
-                return roomsStateChangeAction('bedroom');
-            default:
-                return this.state;
-        }
-    }
-
-        return (
-                <div className='House'>
-                    <Room
-                        roomName='Kitchen'
-                        lightSwitchAction={() => lightSwitchHandler('kitchen')}
-                        roomLightStatus={state.rooms.kitchen}
-                    />
-                    <Room
-                        roomName='Bathroom'
-                        lightSwitchAction={() => lightSwitchHandler('bathroom')}
-                        roomLightStatus={state.rooms.bathroom}
-                    />
-                    <Room
-                        roomName='Living Room'
-                        lightSwitchAction={() => lightSwitchHandler('livingRoom')}
-                        roomLightStatus={state.rooms.livingRoom}
-                    />
-                    <Room
-                        roomName='Bedroom'
-                        lightSwitchAction={() => lightSwitchHandler('bedroom')}
-                        roomLightStatus={state.rooms.bedroom}
-                    />
-                </div>
-        )
-
-}
 
 const HouseWrapper = () => (
     <div className='HouseWrapper'>
         <Container>
-            <House/>
+            <House state={store}/>
         </Container>
     </div>
 )
