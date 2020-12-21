@@ -4,27 +4,29 @@ import Room from "./Room/Room";
 
 const House = observer(({state}) => {
         useEffect(() => state.fetchRoomsAction(), [state]);
+
+
         return (
             <div className='House'>
                 <Room
-                    roomName='Kitchen'
-                    lightSwitchAction={() => state.roomsStateChangeAction('kitchen')}
-                    roomLightStatus={state.rooms.kitchen}
-                />
-                <Room
-                    roomName='Bathroom'
-                    lightSwitchAction={() => state.roomsStateChangeAction('bathroom')}
-                    roomLightStatus={state.rooms.bathroom}
-                />
-                <Room
                     roomName='Living Room'
                     lightSwitchAction={() => state.roomsStateChangeAction('livingRoom')}
-                    roomLightStatus={state.rooms.livingRoom}
+                    roomLightStatus={state.rooms.livingRoom.lightStatus}
                 />
                 <Room
                     roomName='Bedroom'
                     lightSwitchAction={() => state.roomsStateChangeAction('bedroom')}
-                    roomLightStatus={state.rooms.bedroom}
+                    roomLightStatus={state.rooms.bedroom.lightStatus}
+                />
+                <Room
+                    roomName='Kitchen'
+                    lightSwitchAction={() => state.roomsStateChangeAction('kitchen')}
+                    roomLightStatus={state.rooms.kitchen.lightStatus}
+                />
+                <Room
+                    roomName='Bathroom'
+                    lightSwitchAction={() => state.roomsStateChangeAction('bathroom')}
+                    roomLightStatus={state.rooms.bathroom.lightStatus}
                 />
             </div>
         )
