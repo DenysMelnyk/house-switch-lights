@@ -1,29 +1,23 @@
-import {makeObservable, observable, action} from "mobx";
-
-// Mobx Store
-const defaultRooms = {
-    kitchen: true,
-    bathroom: false,
-    livingRoom: true,
-    bedroom: false
-}
+import {action, makeAutoObservable, runInAction} from "mobx";
+import axios from 'axios';
 
 class RoomsStatus {
     rooms = {};
 
-    roomsStateChangeAction(roomName) {
-        this.rooms[roomName] = !this.rooms[roomName]
-    }
+    fetchRoomsAction = action('Fetch Rooms Action', () => {
+        axios.get('https://house-switch-lights-default-rtdb.firebaseio.com/rooms.json')
+            .then(res => runInAction(() => {
+                this.rooms = res.data
+            })).catch(err => console.log(err.message))
+    })
 
-    constructor(rooms) {
-        makeObservable(this, {
-            rooms: observable,
-            roomsStateChangeAction: action
-        })
-        this.rooms = rooms
+    roomsStateChangeAction = action('Rooms State Change Action', roomName => {
+        this.rooms[roomName] = !this.rooms[roomName]
+    })
+
+    constructor() {
+        makeAutoObservable(this)
     }
 }
 
-const store = new RoomsStatus(defaultRooms);
-
-export default store;
+export default new RoomsStatus();
