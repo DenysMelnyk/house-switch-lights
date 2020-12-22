@@ -2,28 +2,7 @@ import {action, makeAutoObservable, runInAction, toJS} from "mobx";
 import axios from 'axios';
 
 class RoomsStatus {
-    rooms = {
-        kitchen: {
-            id: 'kitchen',
-            lightStatus: false,
-            name: 'Kitchen'
-        },
-        bedroom: {
-            id: 'bedroom',
-            lightStatus: false,
-            name: 'Bedroom'
-        },
-        bathroom: {
-            id: 'bathroom',
-            lightStatus: false,
-            name: 'Bathroom'
-        },
-        livingRoom: {
-            id: 'livingRoom',
-            lightStatus: false,
-            name: 'Living Room'
-        }
-    };
+    rooms = {};
 
     fetchRoomsAction = action('Fetch Rooms Action', () => {
         axios.get('https://house-switch-lights-default-rtdb.firebaseio.com/rooms.json')

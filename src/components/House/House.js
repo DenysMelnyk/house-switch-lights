@@ -1,12 +1,13 @@
 import React, {useEffect} from "react";
 import {observer} from "mobx-react";
 import Room from "./Room/Room";
+import Spinner from "../../UI/Spinner/Spinner";
 
 const House = observer(({state}) => {
         useEffect(() => state.fetchRoomsAction(), [state]);
 
 
-        return (
+        return Object.keys(state.rooms).length !== 0 ? (
             <div className='House'>
                 <Room
                     roomName='Living Room'
@@ -29,6 +30,11 @@ const House = observer(({state}) => {
                     roomLightStatus={state.rooms.bathroom.lightStatus}
                 />
             </div>
+        ) : (
+            <>
+                    <p className='HouseNotBuilt'>House is not built...</p>
+                    <Spinner/>
+            </>
         )
     }
 )
