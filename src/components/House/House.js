@@ -6,29 +6,23 @@ import Spinner from "../../UI/Spinner/Spinner";
 const House = observer(({state}) => {
         useEffect(() => state.fetchRoomsAction(), [state]);
 
+        const transformedRoomsData = Object.entries(state.rooms);
+
+        const showRooms = transformedRoomsData.map(room => {
+            const roomData = room[1];
+            return (
+                <Room
+                    key={roomData.id}
+                    roomName={roomData.name}
+                    lightSwitchAction={() => state.roomsStateChangeAction(roomData.id)}
+                    roomLightStatus={roomData.lightStatus}
+                />
+            )
+        })
 
         return Object.keys(state.rooms).length !== 0 ? (
             <div className='House'>
-                <Room
-                    roomName='Living Room'
-                    lightSwitchAction={() => state.roomsStateChangeAction('livingRoom')}
-                    roomLightStatus={state.rooms.livingRoom.lightStatus}
-                />
-                <Room
-                    roomName='Bedroom'
-                    lightSwitchAction={() => state.roomsStateChangeAction('bedroom')}
-                    roomLightStatus={state.rooms.bedroom.lightStatus}
-                />
-                <Room
-                    roomName='Kitchen'
-                    lightSwitchAction={() => state.roomsStateChangeAction('kitchen')}
-                    roomLightStatus={state.rooms.kitchen.lightStatus}
-                />
-                <Room
-                    roomName='Bathroom'
-                    lightSwitchAction={() => state.roomsStateChangeAction('bathroom')}
-                    roomLightStatus={state.rooms.bathroom.lightStatus}
-                />
+                {showRooms}
             </div>
         ) : (
             <>
